@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace RaptorijDevelop.BehaviourGraphs
+{
+    public class #SCRIPTNAME# : Condition
+    {
+		protected override void Initialize()
+		{
+
+		}
+
+		public override void OnParentNodeActivated()
+		{
+			
+		}
+
+		public override void OnParentNodeDeactivated()
+		{
+			
+		}
+
+		public override bool CheckCondition()
+		{
+			return true;
+		}
+	}
+}

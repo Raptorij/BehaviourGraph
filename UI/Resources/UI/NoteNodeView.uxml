@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/AnimationDirector/UI/Resources/UI/NoteNodeViewStyle.uss?fileID=7433441132597879392&amp;guid=c4c518bb7e1601249a098ab1d7ddbf4e&amp;type=3#NoteNodeViewStyle" />
+    <ui:VisualElement name="node-border">
+        <ui:VisualElement name="title">
+            <ui:Label name="title-label" text="One line check" display-tooltip-when-elided="false" class="unity-text-element unity-label" style="flex-wrap: wrap; white-space: normal;" />
+            <ui:VisualElement name="title-button-container">
+                <ui:VisualElement name="collapse-button">
+                    <ui:VisualElement name="icon" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="input" style="scale: 1 1; display: none; visibility: hidden; overflow: hidden;" />
+        <ui:VisualElement name="output" style="display: none; visibility: hidden; overflow: hidden;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="selection-border" picking-mode="Ignore" style="left: 1px; top: 1px; right: 1px; bottom: 3px;" />
+</ui:UXML>

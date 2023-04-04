@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace RaptorijDevelop.BehaviourGraphs
+{
+    public class #SCRIPTNAME# : BehaviourNode
+    {
+		protected override void Initialize()
+		{
+
+		}
+
+		protected override void OnActivated()
+		{
+			
+		}
+
+		protected override void OnDeactivated()
+		{
+			
+		}
+
+		protected override void Update()
+		{
+			
+		}
+	}
+}

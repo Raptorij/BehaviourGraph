@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Scripts/AnimationDirector/UI/Resources/UI/TacticGraphViewStyle.uss?fileID=7433441132597879392&amp;guid=8b6f1e2b2d1d2b140b96fe565d40ef30&amp;type=3#TacticGraphViewStyle" />
+    <uie:Toolbar>
+        <uie:ToolbarMenu display-tooltip-when-elided="true" text="Assets" />
+    </uie:Toolbar>
+    <RaptorijDevelop.BehaviourGraphs.SplitView>
+        <ui:VisualElement name="left-panel" style="flex-shrink: 1; min-width: 100px; width: 100px; flex-grow: 1;">
+            <ui:VisualElement name="inspector-tab" picking-mode="Ignore" style="flex-grow: 1;">
+                <ui:ScrollView picking-mode="Ignore" style="position: absolute; left: 0; top: 15px; right: 0; bottom: 0; flex-grow: 1;">
+                    <RaptorijDevelop.BehaviourGraphs.InspectorView style="flex-grow: 1;" />
+                </ui:ScrollView>
+                <ui:Label text="Inspector" display-tooltip-when-elided="true" style="background-color: rgb(37, 37, 37);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="right-panel" style="flex-grow: 1; flex-shrink: 1;">
+            <ui:Label text="Graph View" display-tooltip-when-elided="true" style="background-color: rgb(37, 37, 37); padding-left: 4px;" />
+            <RaptorijDevelop.BehaviourGraphs.BehaviourGraphView focusable="true" style="flex-grow: 1;" />
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="graph-path-label" style="background-color: rgb(37, 37, 37); align-items: stretch; -unity-text-align: upper-right; padding-right: 6px;" />
+        </ui:VisualElement>
+    </RaptorijDevelop.BehaviourGraphs.SplitView>
+</ui:UXML>

@@ -1,0 +1,91 @@
+#node-border {
+    border-left-color: rgb(32, 32, 32);
+    border-right-color: rgb(32, 32, 32);
+    border-top-color: rgb(32, 32, 32);
+    border-bottom-color: rgb(32, 32, 32);
+    background-color: rgb(188, 186, 116);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    max-width: 200px;
+    min-width: 200px;
+    width: 200px;
+    height: auto;
+    min-height: 24px;
+    flex-grow: 0;
+    align-items: stretch;
+    flex-shrink: 0;
+}
+
+#title {
+    align-items: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    -unity-font-style: normal;
+    color: rgb(48, 48, 48);
+    white-space: normal;
+    flex-wrap: wrap;
+    flex-grow: 1;
+}
+
+#title-label {
+    flex-wrap: wrap;
+    max-width: 100%;
+    flex-grow: 0;
+    height: auto;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+#selection-border {
+    border-left-color: rgb(15, 129, 190);
+    border-right-color: rgb(15, 129, 190);
+    border-top-color: rgb(15, 129, 190);
+    border-bottom-color: rgb(15, 129, 190);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+:hover > #selection-border {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    margin-bottom: -2px;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+
+:selected > #selection-border {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+}
+
+:hover:selected > #selection-border {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+}
