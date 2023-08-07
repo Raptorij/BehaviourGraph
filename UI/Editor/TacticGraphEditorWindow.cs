@@ -4,29 +4,29 @@ using UnityEngine.UIElements;
 using UnityEditor.Callbacks;
 using System;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
-    public class BehaviourGraphEditorWindow : EditorWindow
+    public class TacticGraphEditorWindow : EditorWindow
     {
-        BehaviourGraphView graphView;
+        TacticGraphView graphView;
         InspectorView inspectorView;
         Label graphPathLabel;
 		private VisualElement contentViewContainer;
 		private bool selectionIsNull;
         private bool isInitializedView;
 
-        [MenuItem("Window/Behaviour Graph/Behaviour Graph Editor")]
+        [MenuItem("Window/Animation Graph/TacticGraphEditor")]
         public static void OpenWindow()
         {
-            BehaviourGraphEditorWindow wnd = GetWindow<BehaviourGraphEditorWindow>();
+            TacticGraphEditorWindow wnd = GetWindow<TacticGraphEditorWindow>();
             var texture = Resources.Load<Texture>("Icons/AnimationGraphIcon");
-            wnd.titleContent = new GUIContent("Behaviour Graph", texture);
+            wnd.titleContent = new GUIContent("Tactic Graph", texture);
         }
 
         [OnOpenAsset]
         public static bool OnOpenAsset(int instanceId, int line)
         {
-            if (Selection.activeObject is BehaviourGraphBase)
+            if (Selection.activeObject is TacticGraph)
             {
                 OpenWindow();
                 return true;
@@ -51,15 +51,15 @@ namespace RaptorijDevelop.BehaviourGraphs
                 VisualElement root = rootVisualElement;
                 //TODO Find style
                 //var visualTreePath = AssetDatabase.GetAssetPath();
-                var visualTree = Resources.Load<VisualTreeAsset>("UI/TacticGraphView");
+                var visualTree = Resources.Load<VisualTreeAsset>("UI/TacticGraphEditor");
                 visualTree.CloneTree(root);
 
                 //TODO Find style
-                var styleSheetPath = AssetDatabase.GetAssetPath(Resources.Load<StyleSheet>("UI/TacticGraphViewStyle"));
+                var styleSheetPath = AssetDatabase.GetAssetPath(Resources.Load<StyleSheet>("UI/TacticGraphEditor"));
                 var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(styleSheetPath);
                 root.styleSheets.Add(styleSheet);
 
-                graphView = root.Q<BehaviourGraphView>();
+                graphView = root.Q<TacticGraphView>();
                 inspectorView = root.Q<InspectorView>();
                 graphPathLabel = root.Q<Label>("graph-path-label");
                 contentViewContainer = graphView.Q<VisualElement>("contentViewContainer");
@@ -72,7 +72,7 @@ namespace RaptorijDevelop.BehaviourGraphs
             }
             catch (Exception e)
             {
-                BehaviourGraphEditorWindow wnd = GetWindow<BehaviourGraphEditorWindow>();
+                TacticGraphEditorWindow wnd = GetWindow<TacticGraphEditorWindow>();
                 if (wnd != null)
                 {
                     wnd.Close();
@@ -123,15 +123,15 @@ namespace RaptorijDevelop.BehaviourGraphs
 
         private void OnSelectionChange()
 		{
-            BehaviourGraphBase graph = Selection.activeObject as BehaviourGraphBase;
+            TacticGraph graph = Selection.activeObject as TacticGraph;
             if (!graph)
             {
                 if (Selection.activeGameObject)
                 {
-                    BehaviourDirector director = Selection.activeGameObject.GetComponent<BehaviourDirector>();
+                    TacticDirector director = Selection.activeGameObject.GetComponent<TacticDirector>();
                     if (director)
                     {
-                        graph = director.BehaviourGraph;
+                        graph = director.AnimationGraph;
                     }
                 }                
             }
@@ -152,11 +152,14 @@ namespace RaptorijDevelop.BehaviourGraphs
                     graphView.PopulateView(graph);
                     UpdateBackgroundView();
                 }
-                graphPathLabel.text = AssetDatabase.GetAssetPath(graphView.graph);
+                if (graphPathLabel != null && graphView != null)
+                {
+                    graphPathLabel.text = AssetDatabase.GetAssetPath(graphView.graph);
+                }
             }
         }
 
-        private void OnGraphSelectionChange(BehaviourGraphBase obj)
+        private void OnGraphSelectionChange(TacticGraph obj)
         {
             if (selectionIsNull)
             {

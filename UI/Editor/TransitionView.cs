@@ -7,7 +7,7 @@ using System;
 using UnityEngine.UIElements;
 using UnityEditor;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
     public class TransitionView : Edge
     {
@@ -15,7 +15,6 @@ namespace RaptorijDevelop.BehaviourGraphs
         public Transition transition;
         readonly string edgeStyle = "UI/TransitionStyle";
         public Edge edge;
-
         public TransitionView(Transition transition)
         {
             this.transition = transition;

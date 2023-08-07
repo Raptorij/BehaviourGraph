@@ -2,7 +2,7 @@
 using UnityEngine.UIElements;
 using UnityEditor;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
 	public class InspectorView : VisualElement
     {
@@ -16,7 +16,7 @@ namespace RaptorijDevelop.BehaviourGraphs
 
 		}
 
-		public void UpdateSelection(BehaviourGraphBase graph)
+		public void UpdateSelection(TacticGraph graph)
 		{
 			Clear();
 			if (graph != null)
@@ -40,7 +40,7 @@ namespace RaptorijDevelop.BehaviourGraphs
 				}
 				else
 				{
-					editor = Editor.CreateEditor(nodeView.node);
+					editor = Editor.CreateEditor(nodeView.node, typeof(NodeEditor));
 				}
 				container = new IMGUIContainer(() => { editor.OnInspectorGUI(); });
 				Add(container);

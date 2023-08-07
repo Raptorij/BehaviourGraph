@@ -5,7 +5,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
 	public class NoteNode : Node
 	{
@@ -22,16 +22,16 @@ namespace RaptorijDevelop.BehaviourGraphs
 	{
 		public override void OnInspectorGUI()
 		{
-			//var noteNode = (target as NoteNode<>);
-			//GUI.enabled = false;
-			//EditorGUILayout.TextField("GUID", noteNode.guid);
-			//GUI.enabled = true;
-			//EditorGUI.BeginChangeCheck();
-			//base.OnInspectorGUI();
-			//if (EditorGUI.EndChangeCheck())
-			//{
-			//	noteNode.DateChanged?.Invoke(noteNode);
-			//}
+			var noteNode = (target as NoteNode);
+			GUI.enabled = false;
+			EditorGUILayout.TextField("GUID", noteNode.guid);
+			GUI.enabled = true;
+			EditorGUI.BeginChangeCheck();
+			base.OnInspectorGUI();
+			if (EditorGUI.EndChangeCheck())
+			{
+				noteNode.DateChanged?.Invoke(noteNode);
+			}
 		}
 	}
 #endif

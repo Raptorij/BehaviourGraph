@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using RaptorijDevelop.BehaviourGraph;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.AnimationDirector
 {
     public class #SCRIPTNAME# : NodeAbility
     {

@@ -6,7 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
     public class NodeView : UnityEditor.Experimental.GraphView.Node
     {

@@ -1,12 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
-    public abstract class NodeAbility : ScriptableObject
+    public class NodeAbility : ScriptableObject
     {
+        protected BehaviourNode behaviourNode;
+
+#if UNITY_EDITOR
         [ContextMenu("Remove")]
         void Remove()
         {
@@ -14,10 +17,22 @@ namespace RaptorijDevelop.BehaviourGraphs
             AssetDatabase.SaveAssets();
             DestroyImmediate(this);
         }
+#endif
 
         public void OnDestroy()
         {
 
+        }
+
+        public void Initialize(BehaviourNode behaviourNode)
+        {
+            this.behaviourNode = behaviourNode;
+            Initialize();
+        }
+
+        protected virtual void Initialize()
+        {
+            
         }
 
         public virtual void OnEnter(BehaviourNode behaviourNode)

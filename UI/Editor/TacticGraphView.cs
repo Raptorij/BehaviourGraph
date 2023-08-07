@@ -5,27 +5,24 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor;
 using System;
 using System.Linq;
-using Unity.VisualScripting;
-using System.Diagnostics;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 using System.Reflection;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
-    public class BehaviourGraphView : GraphView
+    public class TacticGraphView : GraphView
     {
         public Action<NodeView> NodeSelected;
         public Action<NoteNodeView> NoteSelected;
         public Action<TransitionView> EdgeSelected;
-        public Action<BehaviourGraphBase> GraphSelected;
-        public new class UxmlFactory : UxmlFactory<BehaviourGraphView, GraphView.UxmlTraits> { }
+        public Action<TacticGraph> GraphSelected;
+        public new class UxmlFactory : UxmlFactory<TacticGraphView, GraphView.UxmlTraits> { }
 
-        public BehaviourGraphBase graph;
+        public TacticGraph graph;
 		private Vector3 screenMousePosition;
         public event System.Action Initialized;
 
-		public BehaviourGraphView()
+		public TacticGraphView()
         {
             Insert(0, new GridBackground());
 
@@ -35,7 +32,7 @@ namespace RaptorijDevelop.BehaviourGraphs
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
             //TODO Find style
-            var styleSheet = Resources.Load<StyleSheet>("UI/TacticGraphViewStyle");
+            var styleSheet = Resources.Load<StyleSheet>("UI/TacticGraphEditor");
             styleSheets.Add(styleSheet);
             Initialized?.Invoke();
         }
@@ -77,7 +74,7 @@ namespace RaptorijDevelop.BehaviourGraphs
             }
         }
 
-		public void PopulateView(BehaviourGraphBase graph)
+		public void PopulateView(TacticGraph graph)
 		{
             this.graph = graph;
             graphViewChanged -= OnGraphViewChanged;
@@ -91,20 +88,14 @@ namespace RaptorijDevelop.BehaviourGraphs
                 AssetDatabase.SaveAssets();
             }
 
-            this.graph.nodes.RemoveAll(n => n == null);
-            this.graph.nodes.ForEach(n => graph.GetTransitions(n).RemoveAll(t => t == null));
-
             this.graph.nodes.ForEach(n => {
-                if (n != null)
+                if (n is NoteNode)
                 {
-                    if (n is NoteNode)
-                    {
-                        CreateNoteNodeView(n as NoteNode, false);
-                    }
-                    else
-                    {
-                        CreateNodeView(n, false);
-                    }
+                    CreateNoteNodeView(n as NoteNode, false);
+                }
+                else
+                {
+                    CreateNodeView(n, false);
                 }
             });
 

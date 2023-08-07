@@ -6,7 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
 #if UNITY_EDITOR
 	[CustomEditor(typeof(BehaviourNode))]
@@ -45,7 +45,7 @@ namespace RaptorijDevelop.BehaviourGraphs
 			var icon = EditorGUIUtility.IconContent("SceneLoadIn");
 			if (GUI.Button(buttonRect, icon))
 			{
-				BehaviourGraphEditorWindow wnd = EditorWindow.GetWindow<BehaviourGraphEditorWindow>();
+				TacticGraphEditorWindow wnd = EditorWindow.GetWindow<TacticGraphEditorWindow>();
 				wnd.SelectElement(transition);
 			}
 		}
@@ -80,8 +80,8 @@ namespace RaptorijDevelop.BehaviourGraphs
 				node.NodeUpdated?.Invoke(node);
 			}
 			EditorGUILayout.Space();
-			list.DoLayoutList();
 			serializedObject.Update();
+			list.DoLayoutList();
 			serializedObject.ApplyModifiedProperties();
 			GUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();

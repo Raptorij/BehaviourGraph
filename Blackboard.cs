@@ -1,21 +1,18 @@
-using Newtonsoft.Json;
 using ParadoxNotion.Serialization;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+#if UNITY_EDITOR
 using UnityEditor;
-using UnityEditor.UIElements;
+#endif
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityObject = UnityEngine.Object;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
 	[Serializable]
 	sealed public class SerializationPair
 	{
-		[TextArea(5,5)]
+		[TextArea(5, 5)]
 		public string _json;
 		public List<UnityEngine.Object> _references;
 		public Type type;
@@ -87,7 +84,7 @@ namespace RaptorijDevelop.BehaviourGraphs
 
 		public void AddVariable(string varName, System.Type type)
 		{
-			if (variables.TryGetValue(varName , out var variable))
+			if (variables.TryGetValue(varName, out var variable))
 			{
 				return;
 			}
@@ -160,5 +157,48 @@ namespace RaptorijDevelop.BehaviourGraphs
 			}
 			return constValue;
 		}
+
+		internal bool TryGetVariable(object blackboard, out object perkAbility)
+		{
+			throw new NotImplementedException();
+		}
 	}
+
+#if UNITY_EDITOR
+	[CustomPropertyDrawer(typeof(VariableReference<>))]
+	public class IngredientDrawerUIE : PropertyDrawer
+	{
+		private bool foldout = true;
+
+		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+		{
+			var varName = property.FindPropertyRelative("varName");
+			var useConstValue = property.FindPropertyRelative("useConstValue");
+			var constValue = property.FindPropertyRelative("constValue");
+			EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+			foldout = EditorGUILayout.BeginFoldoutHeaderGroup(foldout, property.name + " (Variable Reference)");
+			if (foldout)
+			{
+				EditorGUI.indentLevel++;
+				GUI.enabled = !useConstValue.boolValue;
+				var amountField = EditorGUILayout.PropertyField(varName);
+				var rect = GUILayoutUtility.GetLastRect();
+				rect.x += rect.width - 15;
+				rect.width = 15;
+				if (GUI.Button(rect, "+"))
+				{
+
+				}
+				GUI.enabled = true;
+				var unitField = EditorGUILayout.PropertyField(useConstValue);
+				GUI.enabled = useConstValue.boolValue;
+				var nameField = EditorGUILayout.PropertyField(constValue);
+				GUI.enabled = true;
+				EditorGUI.indentLevel--;
+			}
+			EditorGUILayout.EndFoldoutHeaderGroup();
+			EditorGUILayout.EndVertical();
+		}
+	}
+#endif
 }

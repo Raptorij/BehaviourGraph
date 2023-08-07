@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
 	public class Transition : ScriptableObject
 	{
 		[HideInInspector]
-		public BehaviourGraphBase graph;
+		public TacticGraph graph;
 		[HideInInspector]
 		public string guid;
 		[HideInInspector]

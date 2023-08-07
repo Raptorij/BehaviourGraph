@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
     public class NoteNodeView : UnityEditor.Experimental.GraphView.Node
     {
@@ -12,7 +13,7 @@ namespace RaptorijDevelop.BehaviourGraphs
         public NoteNode node;
         private Label label;
 
-        public NoteNodeView(NoteNode node) : base("Assets/Scripts/AnimationDirector/UI/Editor/NoteNodeView.uxml")
+        public NoteNodeView(NoteNode node) : base(AssetDatabase.GetAssetPath(Resources.Load("UI/NoteNodeView")))
         {
             this.node = node;
             //this.node.NodeUpdated = UpdateView;

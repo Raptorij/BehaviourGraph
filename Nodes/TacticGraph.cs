@@ -1,28 +1,50 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
-    [CreateAssetMenu( menuName = "Behaviour Graph/Behaviour Graph", fileName = "New BehaviourGroup")]
-    public class BehaviourGraphBase : ScriptableObject
+    [CreateAssetMenu( menuName = "Tactic Graph/Tactic Graph", fileName = "New TacticGroup")]
+    public class TacticGraph : ScriptableObject
     {
+        public bool IsActive => deactivators.Count == 0;
+
+        private HashSet<Object> deactivators = new HashSet<Object>();
+
         public Node rootNode;
         public Node currentNode;
         bool isStarted = false;
-        public BehaviourDirector behaviourDirector;
+        public TacticDirector tacticDirector;
         public Blackboard blackboard;
         public Node.State graphState = Node.State.Running;
         public Rect rect;
         public List<Node> nodes = new List<Node>();
 
-        public void Initialize(BehaviourDirector behaviourDirector)
+        public void AddDeactivator(Object obj)
         {
-            this.behaviourDirector = behaviourDirector;
-            if (behaviourDirector.TryGetComponent<Blackboard>(out var blackboard))
+            if (deactivators.Add(obj))
+            {
+                if (currentNode != rootNode && currentNode != null && currentNode.started)
+                {
+                    (currentNode as IActionNode).OnStop();
+                }
+            }
+        }
+
+        public void RemoveDeactivator(Object obj)
+        {
+            if (deactivators.Remove(obj))
+            {
+                SetCurrentNode(rootNode);
+            }
+        }
+
+        public void Initialize(TacticDirector animationDirector)
+        {
+            this.tacticDirector = animationDirector;
+            if (animationDirector.TryGetComponent<Blackboard>(out var blackboard))
             {
                 this.blackboard = blackboard;
             }
@@ -37,7 +59,7 @@ namespace RaptorijDevelop.BehaviourGraphs
 
         public Node.State Update()
         {
-            if (isStarted)
+            if (isStarted && IsActive)
             {
                 graphState = currentNode.Update();
             }
@@ -46,10 +68,18 @@ namespace RaptorijDevelop.BehaviourGraphs
 
         public void SetCurrentNode(Node node)
         {
-            currentNode = node;
+            if (IsActive)
+            {
+                if (currentNode is IActionNode actionNode && currentNode.started)
+                {
+                    actionNode.OnStop();
+                }
+                currentNode = node;
+            }
         }
 
-		public Node CreateNode(System.Type type)
+#if UNITY_EDITOR
+        public Node CreateNode(System.Type type)
         {
             Node node = ScriptableObject.CreateInstance(type) as Node;
             node.name = type.Name;
@@ -132,6 +162,7 @@ namespace RaptorijDevelop.BehaviourGraphs
 			AssetDatabase.RemoveObjectFromAsset(transition);
 			AssetDatabase.SaveAssets();
 		}
+#endif
 
         public void ClearConnections(Node parent)
         {
@@ -186,9 +217,9 @@ namespace RaptorijDevelop.BehaviourGraphs
             nodes.Add(node);
         }
 
-        public BehaviourGraphBase Clone()
+        public TacticGraph Clone()
         {
-            BehaviourGraphBase graph = Instantiate(this);
+            TacticGraph graph = Instantiate(this);
             graph.nodes = new List<Node>();
             var transitionsGUID = new Dictionary<string, List<string>>();
             for (int i = 0; i < nodes.Count; i++)

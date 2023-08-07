@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
 	public class Variable
 	{

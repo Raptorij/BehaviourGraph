@@ -1,10 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
     public abstract class BehaviourNode : ActionNode, IActionNode
 	{
@@ -25,6 +22,10 @@ namespace RaptorijDevelop.BehaviourGraphs
 			{
 				transitions[i].Initialize();
 			}
+			for (int i = 0; i < abilities.Count; i++)
+			{
+				abilities[i].Initialize(this);
+			}
 		}
 
 		protected virtual void OnActivated() { }
@@ -38,6 +39,10 @@ namespace RaptorijDevelop.BehaviourGraphs
 			{
 				abilities[i].OnEnter(this);
 			}
+            for (int i = 0; i < transitions.Count; i++)
+            {
+				transitions[i].OnParentNodeStart();
+            }
 		}
 
 		void IActionNode.OnStop()
@@ -46,6 +51,10 @@ namespace RaptorijDevelop.BehaviourGraphs
 			for (int i = 0; i < abilities.Count; i++)
 			{
 				abilities[i].OnExit(this);
+			}
+			for (int i = 0; i < transitions.Count; i++)
+			{
+				transitions[i].OnParentNodeStop();
 			}
 		}
 

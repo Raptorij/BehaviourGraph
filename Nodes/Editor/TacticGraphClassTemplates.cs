@@ -8,28 +8,28 @@ using System.IO;
 
 public class TacticGraphClassTemplates
 {
-    [MenuItem("Assets/Create/Behaviour Graph/C# Behaviour Node Template")]
+    [MenuItem("Assets/Create/Tactic Graph/C# Tactic Template")]
     static void CreateTacticTemplate()
     {
-        TextAsset tacticTemplate = Resources.Load<TextAsset>("ScriptTemplates/BehaviourNodeTemplate.cs");
+        TextAsset tacticTemplate = Resources.Load<TextAsset>("ScriptTemplates/TacticTemplate.cs");
         var assetPath = AssetDatabase.GetAssetPath(tacticTemplate);
-        ProjectWindowUtil.CreateScriptAssetFromTemplateFile(assetPath, "NewBehaviourNode.cs");
+        ProjectWindowUtil.CreateScriptAssetFromTemplateFile(assetPath, "NewTactic.cs");
     }
 
-    [MenuItem("Assets/Create/Behaviour Graph/C# Node Ability Template")]
+    [MenuItem("Assets/Create/Tactic Graph/C# Node Behaviour Template")]
     static void CreateNodeBehaviourTemplate()
     {
-        TextAsset nodeBehaviourTemplate = Resources.Load<TextAsset>("ScriptTemplates/NodeAbilityTemplate.cs");
+        TextAsset nodeBehaviourTemplate = Resources.Load<TextAsset>("ScriptTemplates/NodeBehaviourTemplate.cs");
         var assetPath = AssetDatabase.GetAssetPath(nodeBehaviourTemplate);
-        ProjectWindowUtil.CreateScriptAssetFromTemplateFile(assetPath, "NewNodeAbility.cs");
+        ProjectWindowUtil.CreateScriptAssetFromTemplateFile(assetPath, "NewNodeBehaviour.cs");
     }
 
-    [MenuItem("Assets/Create/Behaviour Graph/C# Condition Template")]
+    [MenuItem("Assets/Create/Tactic Graph/C# Condition Template")]
     static void CreateConditionTemplate()
     {
         TextAsset conditionTemplate = Resources.Load<TextAsset>("ScriptTemplates/ConditionTemplate.cs");
         var assetPath = AssetDatabase.GetAssetPath(conditionTemplate);
-        ProjectWindowUtil.CreateScriptAssetFromTemplateFile(assetPath, "NewNewCondition.cs");
+        ProjectWindowUtil.CreateScriptAssetFromTemplateFile(assetPath, "NewCondition.cs");
     }
 
     static string GetCurrentFolderPath()

@@ -7,7 +7,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
 	[CustomEditor(typeof(Transition))]
 	public class TransitionEditor : Editor

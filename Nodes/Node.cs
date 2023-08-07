@@ -6,9 +6,9 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
-	public class Node : ScriptableObject
+	public abstract class Node : ScriptableObject
 	{
 		public enum State
 		{
@@ -26,7 +26,7 @@ namespace RaptorijDevelop.BehaviourGraphs
 		[HideInInspector]
 		public Vector2 position;
 		[HideInInspector]
-		public BehaviourGraphBase graph;
+		public TacticGraph graph;
 
 		//[SerializeField]
 		[HideInInspector]
@@ -35,7 +35,7 @@ namespace RaptorijDevelop.BehaviourGraphs
 
 		public System.Action<Node> NodeUpdated;
 
-		public void Initialize(BehaviourGraphBase graph)
+		public void Initialize(TacticGraph graph)
 		{
 			this.graph = graph;
 			if (this is IActionNode actionNode)
@@ -93,33 +93,33 @@ namespace RaptorijDevelop.BehaviourGraphs
 	}
 
 #if UNITY_EDITOR
-	//[CustomEditor(typeof(Node))]
-	//public class NodeEditor : Editor
-	//{
-	//	private GameObject gameObject;
-	//	private Editor gameObjectEditor;
+	[CustomEditor(typeof(Node))]
+	public class NodeEditor : Editor
+	{
+		private GameObject gameObject;
+		private Editor gameObjectEditor;
 
-	//	private float currentTime;
+		private float currentTime;
 
-	//	public override void OnInspectorGUI()
-	//	{
-	//		Node node = target as Node;
-	//		EditorGUI.BeginChangeCheck();
-	//		base.OnInspectorGUI();
-	//		if (EditorGUI.EndChangeCheck())
-	//		{
-	//			var transitions = node.graph.GetTransitions(node);
-	//			for (int i = 0; i < transitions.Count; i++)
-	//			{
-	//				transitions[i].name = $"{node.name}=>{transitions[i].connection.name}";
-	//			}
-	//			node.NodeUpdated?.Invoke(node);
-	//		}
+		public override void OnInspectorGUI()
+		{
+			Node node = target as Node;
+			EditorGUI.BeginChangeCheck();
+			base.OnInspectorGUI();
+			if (EditorGUI.EndChangeCheck())
+			{
+				var transitions = node.graph.GetTransitions(node);
+				for (int i = 0; i < transitions.Count; i++)
+				{
+					transitions[i].name = $"{node.name}=>{transitions[i].connection.name}";
+				}
+				node.NodeUpdated?.Invoke(node);
+			}
 
-	//		GUI.enabled = false;
-	//		EditorGUILayout.TextField("GUID", node.guid);
-	//		GUI.enabled = true;
-	//	}
-	//}
+			GUI.enabled = false;
+			EditorGUILayout.TextField("GUID", node.guid);
+			GUI.enabled = true;
+		}
+	}
 #endif
 }

@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-namespace RaptorijDevelop.BehaviourGraphs
+namespace RaptorijDevelop.BehaviourGraph
 {
 	[CustomEditor(typeof(Blackboard))]
 	public class BehaviourBlackboardEditor : Editor
@@ -44,6 +43,7 @@ namespace RaptorijDevelop.BehaviourGraphs
 				}
 				AddBasicTypes(typesNames);
 				AddUnityStructs(typesNames);
+				AddPreferedTypes(typesNames);
 				var mouseRect = GUIUtility.GUIToScreenPoint(Event.current.mousePosition);
 				var searchProvider = ScriptableObject.CreateInstance<StringListSearchProvieder>();
 				searchProvider.Initialize("Add Variable", typesNames.ToArray(), OnTypeSelected);
@@ -80,6 +80,21 @@ namespace RaptorijDevelop.BehaviourGraphs
 				}
 				else
 				{
+					//CheckPreferedTypes;
+					var preferedTypes = Resources.Load<PreferedTypes>("PreferedTypes");
+					if (preferedTypes != null)
+					{
+						var fullTypeName = preferedTypes.types.Find(x => x.Contains(typeName)).Replace("/",".");
+						List<System.Type> allTypes = GetAllTypesInAssembly(new string[] { "" });
+
+						type = allTypes.Find(x => x.FullName == fullTypeName);
+						if (type != null)
+						{
+							AddNewVariable(type);
+						}
+						return;
+					}
+
 					if (typeName == typeof(Vector2).Name)
 					{
 						type = typeof(Vector2);
@@ -146,6 +161,26 @@ namespace RaptorijDevelop.BehaviourGraphs
 			}
 		}
 
+		private List<System.Type> GetAllTypesInAssembly(string[] pAssemblyNames)
+		{
+			List<System.Type> results = new List<System.Type>();
+			foreach (Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
+			{
+				foreach (string assemblyName in pAssemblyNames)
+				{
+					if (assembly.FullName.StartsWith(assemblyName))
+					{
+						foreach (System.Type type in assembly.GetTypes())
+						{
+							results.Add(type);
+						}
+						break;
+					}
+				}
+			}
+			return results;
+		}
+
 		void AddNewVariable(System.Type t)
 		{
 			Undo.RecordObject(blackboard, "Variable Added");
@@ -202,6 +237,15 @@ namespace RaptorijDevelop.BehaviourGraphs
 			types.Add("Basic/Float");
 			types.Add("Basic/Integer");
 			types.Add("Basic/String");
+		}
+
+		private void AddPreferedTypes(List<string> types)
+		{
+			var preferedTypes = Resources.Load<PreferedTypes>("PreferedTypes");
+			if (preferedTypes != null)
+			{
+				types.AddRange(preferedTypes.types);
+			}
 		}
 
 		private void AddUnityStructs(List<string> types)

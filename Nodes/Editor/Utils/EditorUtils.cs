@@ -1,4 +1,4 @@
-using RaptorijDevelop.BehaviourGraphs;
+using RaptorijDevelop.BehaviourGraph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
